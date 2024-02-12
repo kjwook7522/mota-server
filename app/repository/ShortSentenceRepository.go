@@ -2,7 +2,7 @@ package repository
 
 import (
 	"gorm.io/gorm"
-	"mota-server/domain"
+	"mota-server/app/domain"
 )
 
 type ShortSentenceRepository struct {

@@ -2,8 +2,8 @@ package app
 
 import (
 	"log"
-	"mota-server/db"
-	"mota-server/router"
+	"mota-server/app/db"
+	"mota-server/app/router"
 	"strconv"
 
 	"github.com/labstack/echo/v4"

@@ -1,8 +1,8 @@
 package router
 
 import (
-	"mota-server/controller"
-	"mota-server/repository"
+	"mota-server/app/controller"
+	"mota-server/app/repository"
 )
 
 func (r *Router) initLogRouter() {

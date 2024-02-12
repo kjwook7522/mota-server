@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
-	"mota-server/repository"
+	"mota-server/app/repository"
 	"net/http"
 )
 
