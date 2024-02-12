@@ -3,6 +3,7 @@ package controller
 import (
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
+	"mota-server/app/dto"
 	"mota-server/app/repository"
 	"net/http"
 )
@@ -29,5 +30,15 @@ func (ctr *LogController) GetShortSentences(c echo.Context) error {
 	}
 
 	shortSentences := ctr.shortSentenceRepo.FindAll(param.Limit, param.Offset)
-	return c.JSON(http.StatusOK, shortSentences)
+
+	result := make([]dto.ShortSentenceDto, 0)
+	for _, shortSentence := range shortSentences {
+		shortSentenceDto := dto.ShortSentenceDto{
+			ID:       shortSentence.ID,
+			Sentence: shortSentence.Sentence,
+		}
+		result = append(result, shortSentenceDto)
+	}
+
+	return c.JSON(http.StatusOK, result)
 }
