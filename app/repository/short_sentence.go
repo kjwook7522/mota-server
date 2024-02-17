@@ -13,8 +13,8 @@ func NewShortSentenceRepository(db *gorm.DB) *ShortSentenceRepository {
 	return &ShortSentenceRepository{db: db}
 }
 
-func (repo *ShortSentenceRepository) FindAll(limit, offset int) []*domain.ShortSentence {
+func (repo *ShortSentenceRepository) FindAll(limit, offset int) ([]*domain.ShortSentence, error) {
 	shortSentence := make([]*domain.ShortSentence, 0)
-	repo.db.Limit(limit).Offset(offset).Find(&shortSentence)
-	return shortSentence
+	err := repo.db.Limit(limit).Offset(offset).Find(&shortSentence).Error
+	return shortSentence, err
 }

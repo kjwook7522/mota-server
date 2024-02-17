@@ -1,6 +1,6 @@
 package controller
 
-type PageParam struct {
+type Pagination struct {
 	Limit  int `query:"limit"`
 	Offset int `query:"offset"`
 }

@@ -1,14 +1,17 @@
-package db
+package server
 
 import (
 	"fmt"
-	"os"
-
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"os"
 )
 
-func New() (*gorm.DB, error) {
+var db *gorm.DB
+
+func InitDB() error {
+	var err error
+
 	user := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASSWORD")
 	host := os.Getenv("DB_HOST")
@@ -23,5 +26,11 @@ func New() (*gorm.DB, error) {
 		port,
 		database,
 	)
-	return gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
+	return err
+}
+
+func DB() *gorm.DB {
+	return db
 }
