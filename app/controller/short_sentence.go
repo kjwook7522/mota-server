@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"mota-server/app/dto"
 	"mota-server/app/repository"
@@ -22,7 +21,6 @@ func (ctr *ShortSentenceController) GetShortSentences(c echo.Context) error {
 		DefaultLimit  = 10
 		DefaultOffset = 0
 	)
-	log.Info.Println(fmt.Sprintf("%s %s GetShortSentences", c.Request().Method, c.Request().RequestURI))
 
 	pagination := Pagination{Limit: DefaultLimit, Offset: DefaultOffset}
 	err := c.Bind(&pagination)

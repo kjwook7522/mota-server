@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"mota-server/app/domain"
 	"mota-server/app/repository"
@@ -22,7 +21,6 @@ func (ctr *LogController) GetShortSentencePlayLogs(c echo.Context) error {
 		DefaultLimit  = 10
 		DefaultOffset = 0
 	)
-	log.Info.Println(fmt.Sprintf("%s %s GetShortSentencePlayLogs", c.Request().Method, c.Request().RequestURI))
 
 	pagination := Pagination{Limit: DefaultLimit, Offset: DefaultOffset}
 	err := c.Bind(&pagination)
@@ -41,8 +39,6 @@ func (ctr *LogController) GetShortSentencePlayLogs(c echo.Context) error {
 }
 
 func (ctr *LogController) CreateShortSentencePlayLogs(c echo.Context) error {
-	log.Info.Println(fmt.Sprintf("%s %s CreateShortSentencePlayLogs", c.Request().Method, c.Request().RequestURI))
-
 	model := domain.ShortSentencePlayLog{}
 
 	err := c.Bind(&model)

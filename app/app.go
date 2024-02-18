@@ -25,6 +25,7 @@ func New() *MotaApp {
 
 	// echo 로딩
 	server.InitEcho()
+	server.InitEchoMiddleware()
 
 	// router 로딩
 	router.Init()
