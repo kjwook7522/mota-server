@@ -26,3 +26,6 @@ log/*.log
 .env.*
 .env.local
 .env.local.*
+
+# http
+http-client.private.env.json

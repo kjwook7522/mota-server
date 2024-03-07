@@ -1,0 +1,5 @@
+### Short Sentence 목록 조회
+GET {{base_url}}/api/v1/sentence/short
+
+### Short Sentence 목록 필터 조회
+GET {{base_url}}/api/v1/sentence/short?limit=20&offset=20
