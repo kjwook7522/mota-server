@@ -3,6 +3,7 @@ package controller
 import (
 	"github.com/labstack/echo/v4"
 	"mota-server/app/domain"
+	"mota-server/app/dto"
 	"mota-server/app/repository"
 	"mota-server/log"
 	"net/http"
@@ -35,18 +36,41 @@ func (ctr *LogController) GetShortSentencePlayLogs(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 
-	return c.JSON(http.StatusOK, logs)
+	result := make([]dto.ShortSentencePlayLogDto, 0)
+	for _, l := range logs {
+		shortSentencePlayLogDto := dto.ShortSentencePlayLogDto{
+			ID:         l.ID,
+			IpAddress:  l.IpAddress,
+			UserName:   l.UserName,
+			SentenceID: l.SentenceID,
+			Typing:     l.Typing,
+			Speed:      l.Speed,
+			CreatedAt:  l.CreatedAt,
+		}
+		result = append(result, shortSentencePlayLogDto)
+	}
+
+	return c.JSON(http.StatusOK, result)
 }
 
 func (ctr *LogController) CreateShortSentencePlayLogs(c echo.Context) error {
-	model := domain.ShortSentencePlayLog{}
+	requestDto := dto.ShortSentencePlayLogDto{}
 
-	err := c.Bind(&model)
+	err := c.Bind(&requestDto)
 	if err != nil {
 		log.Error.Println(err)
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
+	model := domain.ShortSentencePlayLog{
+		ID:         requestDto.ID,
+		IpAddress:  requestDto.IpAddress,
+		UserName:   requestDto.UserName,
+		SentenceID: requestDto.SentenceID,
+		Typing:     requestDto.Typing,
+		Speed:      requestDto.Speed,
+		CreatedAt:  requestDto.CreatedAt,
+	}
 	id, err := ctr.shortSentencePlayLogRepo.Insert(&model)
 	if err != nil {
 		log.Error.Println(err)
