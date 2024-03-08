@@ -2,7 +2,7 @@ package dto
 
 import "time"
 
-type ShortSentencePlayLogDto struct {
+type ShortSentenceRecordDto struct {
 	ID         uint64    `json:"id"`
 	IpAddress  string    `json:"ip_address"`
 	UserName   string    `json:"user_name"`

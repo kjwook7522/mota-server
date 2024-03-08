@@ -11,6 +11,6 @@ func Init() {
 	baseGroup := echo.Group(BaseApiPath)
 
 	initSentenceRouter(baseGroup)
-	initLogRouter(baseGroup)
+	initRecordRouter(baseGroup)
 	// write routers...
 }

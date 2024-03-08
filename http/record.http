@@ -1,8 +1,8 @@
-### Short Sentence 로그 조회
-GET {{base_url}}/api/v1/log/play/sentence/short
+### Short Sentence 기록 조회
+GET {{base_url}}/api/v1/record/sentence/short
 
-### Short Sentence 로그 생성
-POST {{base_url}}/api/v1/log/play/sentence/short
+### Short Sentence 기록 생성
+POST {{base_url}}/api/v1/record/sentence/short
 Content-Type: application/json
 
 {
