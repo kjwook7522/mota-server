@@ -13,13 +13,13 @@ func NewShortSentenceRecordRepository(db *gorm.DB) *ShortSentenceRecordRepositor
 	return &ShortSentenceRecordRepository{db}
 }
 
-func (repo *ShortSentenceRecordRepository) FindAll(limit, offset int) ([]*entity.ShortSentenceRecord, error) {
-	recordEntities := make([]*entity.ShortSentenceRecord, 0)
+func (repo *ShortSentenceRecordRepository) FindAll(limit, offset int) ([]*entity.ShortSentenceRecordEntity, error) {
+	recordEntities := make([]*entity.ShortSentenceRecordEntity, 0)
 	err := repo.db.Limit(limit).Offset(offset).Find(&recordEntities).Error
 	return recordEntities, err
 }
 
-func (repo *ShortSentenceRecordRepository) Insert(recordEntity *entity.ShortSentenceRecord) (uint64, error) {
+func (repo *ShortSentenceRecordRepository) Insert(recordEntity *entity.ShortSentenceRecordEntity) (uint64, error) {
 	err := repo.db.Create(recordEntity).Error
 	return recordEntity.ID, err
 }

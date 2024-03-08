@@ -2,7 +2,7 @@ package entity
 
 import "time"
 
-type ShortSentenceRecord struct {
+type ShortSentenceRecordEntity struct {
 	ID         uint64 `gorm:"primaryKey;autoIncrement"`
 	IpAddress  string `gorm:"size:15"`
 	UserName   string `gorm:"size:50"`

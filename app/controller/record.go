@@ -62,7 +62,7 @@ func (ctr *RecordController) CreateShortSentenceRecords(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
-	recordEntity := entity.ShortSentenceRecord{
+	recordEntity := entity.ShortSentenceRecordEntity{
 		ID:         requestDto.ID,
 		IpAddress:  requestDto.IpAddress,
 		UserName:   requestDto.UserName,
