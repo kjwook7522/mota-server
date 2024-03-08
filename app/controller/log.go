@@ -2,8 +2,8 @@ package controller
 
 import (
 	"github.com/labstack/echo/v4"
-	"mota-server/app/domain"
 	"mota-server/app/dto"
+	"mota-server/app/entity"
 	"mota-server/app/repository"
 	"mota-server/log"
 	"net/http"
@@ -30,22 +30,22 @@ func (ctr *LogController) GetShortSentencePlayLogs(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
-	logs, err := ctr.shortSentencePlayLogRepo.FindAll(pagination.Limit, pagination.Offset)
+	logEntities, err := ctr.shortSentencePlayLogRepo.FindAll(pagination.Limit, pagination.Offset)
 	if err != nil {
 		log.Error.Println(err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 
 	result := make([]dto.ShortSentencePlayLogDto, 0)
-	for _, l := range logs {
+	for _, logEntity := range logEntities {
 		shortSentencePlayLogDto := dto.ShortSentencePlayLogDto{
-			ID:         l.ID,
-			IpAddress:  l.IpAddress,
-			UserName:   l.UserName,
-			SentenceID: l.SentenceID,
-			Typing:     l.Typing,
-			Speed:      l.Speed,
-			CreatedAt:  l.CreatedAt,
+			ID:         logEntity.ID,
+			IpAddress:  logEntity.IpAddress,
+			UserName:   logEntity.UserName,
+			SentenceID: logEntity.SentenceID,
+			Typing:     logEntity.Typing,
+			Speed:      logEntity.Speed,
+			CreatedAt:  logEntity.CreatedAt,
 		}
 		result = append(result, shortSentencePlayLogDto)
 	}
@@ -62,7 +62,7 @@ func (ctr *LogController) CreateShortSentencePlayLogs(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
-	model := domain.ShortSentencePlayLog{
+	shortSentencePlayLogEntity := entity.ShortSentencePlayLog{
 		ID:         requestDto.ID,
 		IpAddress:  requestDto.IpAddress,
 		UserName:   requestDto.UserName,
@@ -71,11 +71,11 @@ func (ctr *LogController) CreateShortSentencePlayLogs(c echo.Context) error {
 		Speed:      requestDto.Speed,
 		CreatedAt:  requestDto.CreatedAt,
 	}
-	id, err := ctr.shortSentencePlayLogRepo.Insert(&model)
+	logId, err := ctr.shortSentencePlayLogRepo.Insert(&shortSentencePlayLogEntity)
 	if err != nil {
 		log.Error.Println(err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 
-	return c.JSON(http.StatusOK, id)
+	return c.JSON(http.StatusOK, logId)
 }

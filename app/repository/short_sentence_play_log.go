@@ -2,7 +2,7 @@ package repository
 
 import (
 	"gorm.io/gorm"
-	"mota-server/app/domain"
+	"mota-server/app/entity"
 )
 
 type ShortSentencePlayLogRepository struct {
@@ -13,13 +13,13 @@ func NewShortSentencePlayLogRepository(db *gorm.DB) *ShortSentencePlayLogReposit
 	return &ShortSentencePlayLogRepository{db}
 }
 
-func (repo *ShortSentencePlayLogRepository) FindAll(limit, offset int) ([]*domain.ShortSentencePlayLog, error) {
-	playLog := make([]*domain.ShortSentencePlayLog, 0)
-	err := repo.db.Limit(limit).Offset(offset).Find(&playLog).Error
-	return playLog, err
+func (repo *ShortSentencePlayLogRepository) FindAll(limit, offset int) ([]*entity.ShortSentencePlayLog, error) {
+	logEntities := make([]*entity.ShortSentencePlayLog, 0)
+	err := repo.db.Limit(limit).Offset(offset).Find(&logEntities).Error
+	return logEntities, err
 }
 
-func (repo *ShortSentencePlayLogRepository) Insert(model *domain.ShortSentencePlayLog) (uint64, error) {
-	err := repo.db.Create(model).Error
-	return model.ID, err
+func (repo *ShortSentencePlayLogRepository) Insert(logEntity *entity.ShortSentencePlayLog) (uint64, error) {
+	err := repo.db.Create(logEntity).Error
+	return logEntity.ID, err
 }
