@@ -1,9 +1,9 @@
 package app
 
 import (
-	"log"
-	"mota-server/db"
-	"mota-server/router"
+	"mota-server/app/router"
+	"mota-server/app/server"
+	"mota-server/log"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
@@ -11,32 +11,41 @@ import (
 )
 
 type MotaApp struct {
-	echo   *echo.Echo
-	db     *gorm.DB
-	router *router.Router
+	echo *echo.Echo
+	db   *gorm.DB
 }
 
 func New() *MotaApp {
 
 	// db 로딩
-	d, err := db.New()
+	err := server.InitDB()
 	if err != nil {
-		log.Fatal(err)
+		log.Error.Panic(err)
 	}
 
 	// echo 로딩
-	e := echo.New()
+	server.InitEcho()
+	server.InitEchoMiddleware()
 
 	// router 로딩
-	r := router.New(e, d)
-	r.RegisterAll()
+	router.Init()
 
 	// app 생성
-	app := &MotaApp{echo: e, db: d, router: r}
+	app := &MotaApp{echo: server.Echo(), db: server.DB()}
 
 	return app
 }
 
 func (app *MotaApp) Start(port int) {
 	app.echo.Logger.Fatal(app.echo.Start(":" + strconv.Itoa(port)))
+}
+
+func (app *MotaApp) ValidateGlobalInstances() {
+	if app.echo == nil {
+		log.Error.Panic("echo instance has not been initialized")
+	}
+
+	if app.db == nil {
+		log.Error.Panic("db instance has not been initialized")
+	}
 }

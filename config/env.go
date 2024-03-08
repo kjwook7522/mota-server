@@ -6,9 +6,14 @@ import (
 	"github.com/joho/godotenv"
 )
 
+const (
+	Dev  = "dev"
+	Prod = "prod"
+)
+
 func InitEnv() error {
-	const ENV_DEV_FILE_NAME = ".env.dev"
-	const ENV_PROD_FILE_NAME = ".env.prod"
+	const DevEnvFileName = ".env.dev"
+	const ProdEnvFileName = ".env.prod"
 
 	if err := godotenv.Load(); err != nil {
 		return err
@@ -16,16 +21,24 @@ func InitEnv() error {
 
 	env := os.Getenv("ENV")
 	switch env {
-	case "prod":
-		if err := godotenv.Load(ENV_PROD_FILE_NAME); err != nil {
+	case Dev:
+		if err := godotenv.Load(DevEnvFileName); err != nil {
 			return err
 		}
 
-	case "dev":
-		if err := godotenv.Load(ENV_DEV_FILE_NAME); err != nil {
+	case Prod:
+		if err := godotenv.Load(ProdEnvFileName); err != nil {
 			return err
 		}
 	}
 
 	return nil
+}
+
+func IsDev() bool {
+	return os.Getenv("ENV") == Dev
+}
+
+func IsProd() bool {
+	return os.Getenv("ENV") == Prod
 }
